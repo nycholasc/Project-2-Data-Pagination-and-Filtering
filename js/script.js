@@ -6,13 +6,14 @@ For assistance:
    Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
    Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
 */
+
+
 const itemsPerPage = 9;
 const maxWordsToSearch = 5;
 let currentPage = 1;
 
 
 /*
-Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 function showPage(list, page) {
@@ -21,12 +22,15 @@ function showPage(list, page) {
    studentUL.innerHTML = "";   
    
    if (list.length == 0) {
+      //-- Thow new results found error.
       studentUL.innerHTML = `<p>0 students found.</p>`;   
    }
    else {
       //-- Limit page range
       page = Math.max(page, 1);
       page = Math.min(page, Math.ceil(list.length / itemsPerPage));
+
+      //-- Set global current page
       currentPage = page;
       
       //-- Define variables
@@ -53,11 +57,9 @@ function showPage(list, page) {
                                        <span class="date">Joined ${ userData.registered.date }</span>
                                     </div>
                                  </li>`;
-            
-         
       }
    }
-   
+
    //-- pagination to page
    addPagination(list);
 }
@@ -65,7 +67,6 @@ function showPage(list, page) {
 
 
 /*
-Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 function addPagination(list) {
@@ -100,7 +101,7 @@ function addPagination(list) {
 
 /**
  * Make and insert the search input then create the page 
- */
+*/
 function makeSearch(list) {
    //-- Create and append search to header 
    let headerObj = document.querySelector("header");
@@ -132,12 +133,12 @@ function makeSearch(list) {
                //-- Make sure text has value before matching
                if (inputText.trim().length > 0) {
 
-                  //-- Add search rank if first name matches
+                  //-- Add to search rank if first name matches
                   if (userData.name.first.toLowerCase().indexOf(inputText) >= 0) {
                      parsedData = addSearchRank(parsedData, userData, inputText.length);
                   }
 
-                  //-- Add search rank if last name matches
+                  //-- Add to search rank if last name matches
                   if (userData.name.last.toLowerCase().indexOf(inputText) >= 0) {
                      parsedData = addSearchRank(parsedData, userData, inputText.length);
                   }
@@ -159,7 +160,7 @@ function makeSearch(list) {
  * Check if user data exists within parsed data, add if not
  * Also +1 to search rank so we can sort by most relevant later
  * @returns {Array}
- */
+*/
 function addSearchRank(parsedData, userData, amount) {
    //-- Create a blank index to maybe push later
    let dataIndex = -1;
